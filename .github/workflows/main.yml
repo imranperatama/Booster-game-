@@ -13,6 +13,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: build-speedxz
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -63,6 +67,16 @@ jobs:
         run: |
           cd "$PROJECT_DIR"
           gradle assembleRelease --no-daemon --stacktrace
+
+      - name: Simpan laporan build jika gagal
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SpeedXz-build-report
+          path: |
+            ${{ env.PROJECT_DIR }}/app/build/reports
+            ${{ env.PROJECT_DIR }}/build/reports
+          if-no-files-found: ignore
 
       - name: Kumpulkan APK
         run: |
