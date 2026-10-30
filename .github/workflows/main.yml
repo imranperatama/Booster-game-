@@ -105,4 +105,3 @@ jobs:
           NOTES="Speed Xz x Imran Peratama, build ${{ github.run_number }}. Pasang APK ini menimpa versi lama (tanda tangan sama, tidak perlu uninstall)."
           gh release create "$TAG" "$APK_FILE" --title "Speed Xz $TAG" --notes "$NOTES" --target "${{ github.sha }}" \
             || gh release upload "$TAG" "$APK_FILE" --clobber
-            
